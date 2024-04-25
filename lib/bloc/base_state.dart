@@ -8,8 +8,9 @@ class ProductsLoading extends BaseState {}
 
 class ProductsLoaded extends BaseState {
   final List<Product> products;
+  final bool isDataFound;
 
-  ProductsLoaded({required this.products});
+  ProductsLoaded({required this.products, required this.isDataFound});
 }
 
 class ProductsError extends BaseState {

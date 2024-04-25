@@ -15,8 +15,13 @@ class BaseBloc extends Bloc<BaseEvent, BaseState> {
   FutureOr<void> _fetchProducts(FetchProducts event, Emitter<BaseState> emit) async {
     emit(ProductsLoading());
     final response = await _service.getAllDummyData();
-    if (response.success) {
-      emit(ProductsLoaded(products: response.data!.products));
+    if (response.success && response.data != null) {
+      if (response.data!.products.isEmpty) {
+        emit(ProductsLoaded(products: response.data!.products, isDataFound: false));
+        return;
+      }
+
+      emit(ProductsLoaded(products: response.data!.products, isDataFound: true));
     } else {
       emit(ProductsError(message: response.message));
     }
